@@ -114,13 +114,6 @@
       box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
 
-    .cotizador input, .cotizador select, .cotizador button {
-      margin: 5px;
-      padding: 10px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
     .observer-btn {
       position: fixed;
       bottom: 90px;
@@ -156,16 +149,6 @@
       color: #f0f0f0 !important;
     }
 
-    .observer-mode .cotizador {
-      background-color: #2c2c54 !important;
-      color: #f0f0f0 !important;
-    }
-
-    .observer-mode .cotizador input, .observer-mode .cotizador select, .observer-mode .cotizador button {
-      background-color: #40405c !important;
-      color: white !important;
-    }
-
     .observer-mode .observer-btn {
       background-color: #ff6f61 !important;
     }
@@ -186,6 +169,32 @@
       font-style: italic;
       color: #555;
     }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      overflow: hidden;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-title {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 1.5em;
+      color: #2c3e50;
+    }
   </style>
 </head>
 <body>
@@ -201,6 +210,19 @@
       <img src="https://via.placeholder.com/300x200/EEE8AA/000000?text=Proyecto+1" alt="Proyecto 1">
       <img src="https://via.placeholder.com/300x200/EEE8AA/000000?text=Proyecto+2" alt="Proyecto 2">
       <img src="https://via.placeholder.com/300x200/EEE8AA/000000?text=Proyecto+3" alt="Proyecto 3">
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="video-title">Nuestro Video Promocional</h2>
+    <div class="video-container">
+      <!-- Reemplaza este iframe con tu video real -->
+      <iframe 
+        src="https://www.youtube.com/embed/5JQ8Z0kY2wE?autoplay=1&mute=1&loop=1&playlist=5JQ8Z0kY2wE&controls=1" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 
@@ -235,27 +257,8 @@
   </div>
 
   <div class="section">
-    <h2>Cotizador de Proyectos con SAIE</h2>
-    <div class="cotizador">
-      <label>¿Qué estás construyendo?</label><br>
-      <select id="tipo">
-        <option value="losa">Losa</option>
-        <option value="cimentacion">Cimentación</option>
-        <option value="construccion">Construcción</option>
-        <option value="remodelacion">Remodelación</option>
-      </select><br>
-      <label>¿Materiales?</label><br>
-      <input type="text" id="materiales" placeholder="Ej: concreto, varilla, block"><br>
-      <label>¿Metros cuadrados?</label><br>
-      <input type="number" id="metros" placeholder="Ingresa m²"><br>
-      <button onclick="calcularCosto()">Calcular Costo</button><br>
-      <div id="resultado"></div>
-    </div>
-  </div>
-
-  <div class="section">
     <h2>Proyectos y Testimonios de Alumnos de SAIE</h2>
-    <p>Sección para que los alumnos suban imágenes y comentarios. (Puedes integrar con un sistema externo o formularios de Google).</p>
+    <p>Sección para que los alumnos suban imágenes y comentarios. (Puedes integrar con Google Forms o un sistema externo).</p>
   </div>
 
   <div class="section">
@@ -296,13 +299,6 @@
     <button onclick="closeCoursePopup()">Cerrar</button>
   </div>
 
-  <div class="popup" id="remodelPopup">
-    <h3>Cotiza tu remodelación</h3>
-    <textarea id="descripcion" placeholder="Describe tu proyecto"></textarea><br>
-    <button onclick="enviarRemodelacion()">Enviar</button>
-    <button onclick="closeRemodelPopup()">Cerrar</button>
-  </div>
-
   <script>
     function openPopup() {
       document.getElementById("contactPopup").style.display = "block";
@@ -336,48 +332,6 @@
 
     function showRating(value) {
       document.getElementById("rating-value").innerText = value;
-    }
-
-    function calcularCosto() {
-      const tipo = document.getElementById("tipo").value;
-      const metros = document.getElementById("metros").value;
-
-      if (metros) {
-        let precio = 0;
-        switch(tipo) {
-          case "losa":
-            precio = metros * 800;
-            break;
-          case "cimentacion":
-            precio = metros * 1200;
-            break;
-          case "construccion":
-            precio = metros * 2500;
-            break;
-          case "remodelacion":
-            document.getElementById("remodelPopup").style.display = "block";
-            document.getElementById("overlay").style.display = "block";
-            return;
-        }
-        document.getElementById("resultado").innerHTML = `<p>Costo estimado: $${precio.toLocaleString()} MXN</p>`;
-      } else {
-        alert("Por favor, ingresa los metros cuadrados.");
-      }
-    }
-
-    function enviarRemodelacion() {
-      const desc = document.getElementById("descripcion").value;
-      if (desc) {
-        alert("Gracias. Tu solicitud ha sido enviada a nuestro equipo.");
-        closeRemodelPopup();
-      } else {
-        alert("Por favor, describe tu proyecto.");
-      }
-    }
-
-    function closeRemodelPopup() {
-      document.getElementById("remodelPopup").style.display = "none";
-      document.getElementById("overlay").style.display = "none";
     }
 
     document.getElementById("observerBtn").addEventListener("click", function() {
